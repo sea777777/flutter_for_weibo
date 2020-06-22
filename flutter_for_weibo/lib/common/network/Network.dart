@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_for_weibo/common/network/HttpService.dart';
 import '../Global.dart';
 
 
@@ -7,7 +8,7 @@ class Network{
   Network(){
     
     BaseOptions baseOptions = new BaseOptions(
-        baseUrl: 'https://open.weibo.cn',//https://api.weibo.com
+        baseUrl: URLConfig.baseURL,
         connectTimeout: 15000,
         receiveTimeout: 15000,
         // headers: 

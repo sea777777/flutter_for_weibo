@@ -30,6 +30,10 @@ dependencies:
   # 持久化库 类似于 NSUserDefaults
   shared_preferences: ^0.5.7
 
+  #webview ,这里在微博授权登录时候要跳到webview来授权
+  webview_flutter: ^0.3.22
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

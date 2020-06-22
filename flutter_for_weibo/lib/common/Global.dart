@@ -23,8 +23,9 @@ class Global {
 
   }
   
-  //微博认证相关
+  //微博授权登录相关
   static String weiboAppKey = '1207543647';
   static String weiboAppSecret = '9e80543f2e9546c76e06d3fd9d1ef9eb';
+  static String weiboDisplay = 'mobile';
 
 }
