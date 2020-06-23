@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './common/Global.dart';
 import './common/network/HttpService.dart';
 import './views/Browser.dart';
+import './common/network/Network.dart';
 
 void main() => runApp(MyApp());
 
@@ -38,6 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void login() {
 
+    HttpService.getWeiBoContent();
     Navigator.of(context).push(new MaterialPageRoute(builder: (_) {
 
       String url = URLConfig.baseURL + URLConfig.auth + "?display=" + Global.weiboDisplay + "&client_id=" + Global.weiboAppKey + "&redirect_uri=" + URLConfig.weiboRedirectUri;
