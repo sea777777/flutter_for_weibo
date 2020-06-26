@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_for_weibo/routes/mainRoute.dart';
 import './common/Global.dart';
 import './common/network/HttpService.dart';
 import './views/Browser.dart';
 import './common/network/Network.dart';
+import './common/routesTable.dart';
 
 void main() => runApp(MyApp());
 
@@ -18,6 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      routes: routesTable.tableMap(),//注册 route 表
       home: MyHomePage(title: '微博宇宙无敌版'),
     );
   }
@@ -39,7 +42,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void login() {
 
-    HttpService.getWeiBoContent();
+    Navigator.of(context).pushNamed(routesTable.main_route);
+    return;
+
+
     Navigator.of(context).push(new MaterialPageRoute(builder: (_) {
 
       String url = URLConfig.baseURL + URLConfig.auth + "?display=" + Global.weiboDisplay + "&client_id=" + Global.weiboAppKey + "&redirect_uri=" + URLConfig.weiboRedirectUri;
@@ -55,6 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
           }
         },
       );
+      
     }));
   }
 

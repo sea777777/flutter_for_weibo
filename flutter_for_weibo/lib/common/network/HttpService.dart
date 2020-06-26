@@ -1,6 +1,7 @@
-import 'Network.dart';
-import '../Global.dart';
+import 'dart:ffi';
 
+import 'Network.dart';
+import 'package:flutter_for_weibo/models/WeiBoModel.dart';
 
 class HttpService {
   
@@ -17,9 +18,19 @@ class HttpService {
   //   return response;
   // }
 
+
   static void getWeiBoContent(){
-    var params = {'containerid':'102803', 'openApp':'0','since_id':'4'};
-    Network.sharedInstance.doGet(URLConfig.getWBContent, params,null,null,URLConfig.mWeiBoBaseURL);
+    var params = {'containerid':'102803', 'openApp':'0','since_id':'1'};
+    
+    //成功回调函数
+    SuccessFunc successFunc = (dynamic result){
+      WeiBoModel model = WeiBoModel.fromJson(result);
+    };
+    //失败回调函数
+    FailFunc failFunc = (dynamic error){
+      
+    };
+    Network.sharedInstance.doGet(URLConfig.getWBContent, params,successFunc,failFunc,URLConfig.mWeiBoBaseURL);
   }
 
 }

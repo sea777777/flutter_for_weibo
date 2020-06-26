@@ -1,10 +1,14 @@
+// import 'dart:ffi';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_for_weibo/common/network/HttpService.dart';
 import '../Global.dart';
 import 'dart:convert';
-import '../../models/WeiBoModel.dart';
 
 enum HTTPMethod { get, post }
+
+typedef void SuccessFunc(dynamic);
+typedef void FailFunc(dynamic);
 
 class Network {
 
@@ -34,18 +38,18 @@ class Network {
   }
 
 
-  void doGet(String path, Map<String, dynamic> params, [Function success, Function failure,String baseURL]) {
+  void doGet(String path, Map<String, dynamic> params, [SuccessFunc success, FailFunc failure,String baseURL]) {
     _doRequest(path, params, HTTPMethod.get, success,failure,baseURL);
   }
 
-  void doPost(String path, Map<String, dynamic> params,[Function success, Function failure,String baseURL]) {
+  void doPost(String path, Map<String, dynamic> params,[SuccessFunc success, FailFunc failure,String baseURL]) {
     _doRequest(path, params, HTTPMethod.post, success,failure,baseURL);
   }
 
   /*
     private 方法加下划线
   */
-  void _doRequest(String path, Map<String, dynamic> params, HTTPMethod method, [Function successCallBack, Function failureCallBack,String baseURL]) async {
+  void _doRequest(String path, Map<String, dynamic> params, HTTPMethod method, [SuccessFunc successCallBack, FailFunc failureCallBack,String baseURL]) async {
     
     if (baseURL == null || baseURL.isEmpty){
       baseURL = URLConfig.baseURL;
@@ -71,18 +75,10 @@ class Network {
           break;
       }
       Map<String, dynamic> result = json.decode(response.toString());
-      WeiBoModel model = WeiBoModel.fromJson(result);
-      // if (model.code == 200) {
       if (successCallBack != null) {
-        successCallBack(model);
+        successCallBack(result);
       }
-      // } else {
-      //直接使用Toast弹出错误信息
-      //返回失败信息
-      if (failureCallBack != null) {
-        failureCallBack(null);
-      }
-      // }
+      
     } catch (exception) {
       if (failureCallBack != null) {
         failureCallBack(exception.toString());
