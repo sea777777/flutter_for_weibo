@@ -26,7 +26,7 @@ class Network {
     );
 
     _dio = new Dio(baseOptions);
-    _dio.interceptors.add(Global.httpInterceptor);
+    // _dio.interceptors.add(Global.httpInterceptor);
   }
 
   //单例

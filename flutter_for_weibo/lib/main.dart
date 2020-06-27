@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_for_weibo/routes/mainRoute.dart';
+import 'package:flutter_for_weibo/routes/MainRoute.dart';
 import './common/Global.dart';
 import './common/network/HttpService.dart';
 import './views/Browser.dart';
 import './common/network/Network.dart';
-import './common/routesTable.dart';
+import './common/RoutesTable.dart';
 
 void main() => runApp(MyApp());
 
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      routes: routesTable.tableMap(),//注册 route 表
+      routes: RoutesTable.tableMap(),//注册 route 表
       home: MyHomePage(title: '微博宇宙无敌版'),
     );
   }
@@ -41,8 +41,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   void login() {
-
-    Navigator.of(context).pushNamed(routesTable.main_route);
+    
+    Navigator.of(context).pushNamed(RoutesTable.bottomTabbarRoute);
     return;
 
 

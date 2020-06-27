@@ -1,32 +1,62 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_for_weibo/models/WeiBoModel.dart';
+import 'package:flutter_for_weibo/common/network/HttpService.dart';
 import 'package:flutter_for_weibo/items/weiboItem.dart';
+import 'package:flutter_for_weibo/models/WeiBoCard.dart';
+import './VideoRoute.dart';
+import './FindRoute.dart';
+import './MessageRoute.dart';
+import './MineRoute.dart';
 
 
-class mainRoute extends StatefulWidget {
-  const mainRoute({Key key}) : super(key: key);
+class MainRoute extends StatefulWidget {
+  const MainRoute({Key key}) : super(key: key);
 
   @override
-  _mainRouteState createState() => _mainRouteState();
+  _MainRoute createState() => _MainRoute();
 }
 
-class _mainRouteState extends State<mainRoute> {
+class _MainRoute extends State<MainRoute> with SingleTickerProviderStateMixin{
   bool isLoading = false;
   ScrollController scrollController = ScrollController();
-  List<WeiBoCard> list ;
+  List<WeiBoCard> list = List<WeiBoCard>();
+  int sinceId = 0;
+  DateTime lastTime ;
+
+  TabController tabController;
+  var tabs = <Tab>[];
 
   @override
   void initState() {
     super.initState();
+
+    tabs = <Tab>[
+      Tab(text: "Tab1",),
+      Tab(text: "Tab2",),
+      Tab(text: "Tab3",),
+      Tab(text: "Tab4",),
+      Tab(
+        text: "Tab5",
+        icon: Icon(Icons.phone),
+      ),
+    ];
+    tabController =
+        TabController(initialIndex: 3, length: tabs.length, vsync: this);
+
+
+    lastTime = DateTime.now();
+
+    loadData();
+
     this.scrollController.addListener(() {
-      if (
-        !this.isLoading &&
-        this.scrollController.position.pixels >= this.scrollController.position.maxScrollExtent
-      ) {
-        setState(() {
-          this.isLoading = true;
-          this.loadMoreData();
-        });
+      if (!this.isLoading && this.scrollController.position.pixels >= this.scrollController.position.maxScrollExtent) {
+          DateTime curTime = DateTime.now();
+          Duration during = curTime.difference(lastTime);
+
+          if(during.inSeconds > 2 || lastTime == null){
+            this.isLoading = true;
+            this.loadData();
+            lastTime = curTime;
+          }
       }
     });
   }
@@ -37,13 +67,27 @@ class _mainRouteState extends State<mainRoute> {
     this.scrollController.dispose();
   }
 
-  Future loadMoreData() {
-    return Future.delayed(Duration(seconds: 1), () {
-      setState(() {
-        this.isLoading = false;
-        // this.list.addAll(newsList);
-      });
-    });
+  loadData() {
+
+    HttpService.getWeiBoContent(
+      containerId: '102803',
+      sinceId: sinceId.toString(),
+      callback: (List<WeiBoCard> cardList){
+        if(cardList != null && cardList.length > 0){
+          for (var weibocard in cardList) {
+            if(!list.contains(weibocard)){
+              list.add(weibocard);
+            }
+          }
+        }
+        
+        this.setState(() {
+          this.sinceId ++;
+          this.isLoading = false;
+        });
+      }
+    );
+    
   }
 
   Widget renderBottom() {
@@ -57,7 +101,7 @@ class _mainRouteState extends State<mainRoute> {
               '努力加载中...',
               style: TextStyle(
                 fontSize: 15,
-                color: Color(0x000000),
+                color: Color(0xFF333333),
               ),
             ),
             Padding(padding: EdgeInsets.only(left: 10)),
@@ -77,7 +121,7 @@ class _mainRouteState extends State<mainRoute> {
           '上拉加载更多',
           style: TextStyle(
             fontSize: 15,
-            color: Color(0xffffff),
+            color: Color(0xFF333333),
           ),
         ),
       );
@@ -86,19 +130,93 @@ class _mainRouteState extends State<mainRoute> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      controller: this.scrollController,
-      itemCount: 10 + 1,
-      separatorBuilder: (context, index) {
-        return Divider(height: .5, color: Color(0xffffff));
-      },
-      itemBuilder: (context, index) {
-        if (index < 10 ){
-          return weiboItem(data: null);
-        } else {
-          return this.renderBottom();
-        }
-      },
-    );
+
+    // return DefaultTabController(
+    //   length: tabs.length,
+    //   child: MaterialApp(
+    //     home: Scaffold(
+    //       backgroundColor: Colors.white,
+    //       appBar: AppBar(
+    //         title: TabBar(
+    //           controller: tabController,//可以和TabBarView使用同一个TabController
+    //           tabs: tabs,
+    //           isScrollable: true,
+    //           indicatorColor: Color(0xffff0000),
+    //           indicatorWeight: 1,
+    //           indicatorSize: TabBarIndicatorSize.tab,
+    //           indicatorPadding: EdgeInsets.only(bottom: 10.0),
+    //           labelPadding: EdgeInsets.only(left: 20),
+    //           labelColor: Color(0xff333333),
+    //           labelStyle: TextStyle(
+    //             fontSize: 15.0,
+    //           ),
+    //           unselectedLabelColor: Color(0xffffffff),
+    //           unselectedLabelStyle: TextStyle(
+    //             fontSize: 12.0,
+    //           ),
+    //         ),
+    //       ),
+    //       body: TabBarView(
+    //           controller: tabController,
+    //           children: tabs
+    //               .map((Tab tab) =>
+    //               Container(child: Center(child: Text(tab.text),),))
+    //               .toList()),
+    //     ),
+    //   ),
+    // );
+
+     final pages = [MainRoute(), VideoRoute(), FindRoute(), MessageRoute(),MineRoute()];
+
+    
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text('热门'),
+      ),
+      bottomNavigationBar: new Material(
+          color: Colors.white,
+          child: new TabBar(
+            controller: tabController,
+            labelColor: Colors.black87,
+            unselectedLabelColor: Colors.black26,
+            tabs: <Widget>[
+              new Tab(
+                text: "微博",
+                icon: Image.asset("lib/images/tabbar_home.png", width: 35, height: 35),
+              ),
+              new Tab(
+                text: "视频",
+                icon: Image.asset("lib/images/composer_video_icon_album.png", width: 35, height: 35),
+              ),
+              new Tab(
+                text: "发现",
+                icon: Image.asset("lib/images/tabbar_discover.png", width: 35, height: 35),
+              ),
+              new Tab(
+                text: "消息",
+                icon: Image.asset("lib/images/tabbar_message_center.webp", width: 35, height: 35),
+              ),
+              new Tab(
+                text: "我",
+                icon: Image.asset("lib/images/tabbar_profile.webp", width: 35, height: 35),
+              ),
+            ],
+          ),
+      ),
+      body:ListView.separated(
+        controller: this.scrollController,
+        itemCount: this.list.length + 1,
+        separatorBuilder: (context, index) {
+          return Divider(height: .5,color: Color(0xFFDDDDDD));
+        },
+        itemBuilder: (context, index) {
+          if (index < this.list.length) {
+            return WeiboItem(data: this.list[index]);
+          } else {
+            return this.renderBottom();
+          }
+        },
+    ));
   }
 }

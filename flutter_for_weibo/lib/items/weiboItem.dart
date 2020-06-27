@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_for_weibo/models/WeiBoModel.dart';
+import 'package:flutter_for_weibo/models/WeiBoCard.dart';
 
 
-class weiboItem extends StatelessWidget {
+class WeiboItem extends StatelessWidget {
 
-  final WeiBoModel data;
+  final WeiBoCard data;
 
-  const weiboItem({Key key, this.data}) : super(key: key);
+  const WeiboItem({Key key, this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    
     return Container(
       padding: EdgeInsets.all(16),
+      color: Color(0x000000),
       child: Row(
         children: <Widget>[
           Expanded(
@@ -19,13 +21,13 @@ class weiboItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  '标题+++++',
+                  '${data.rawText}',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
-                    color: Color(0x000000),
+                    color: Color(0xFF333333),
                   ),
                 ),
                 Padding(padding: EdgeInsets.only(top: 3)),
@@ -35,7 +37,7 @@ class weiboItem extends StatelessWidget {
                       '文本++++++++++++',
                       style: TextStyle(
                         fontSize: 13,
-                        color: Color(0x000000),
+                        color: Color(0xFF333333),
                       ),
                     ),
                   ],
@@ -56,23 +58,3 @@ class weiboItem extends StatelessWidget {
   }
 }
 
-class NewsViewModel {
-  /// 新闻标题
-  final String title;
-
-  /// 来源
-  final String source;
-
-  /// 评论数量
-  final int comments;
-
-  /// 新闻配图
-  final String coverImgUrl;
-
-  const NewsViewModel({
-    this.title,
-    this.source,
-    this.comments,
-    this.coverImgUrl,
-  });
-}

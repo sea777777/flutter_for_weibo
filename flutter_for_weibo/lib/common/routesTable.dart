@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
-import '../routes/mainRoute.dart';
+import '../routes/MainRoute.dart';
+import '../routes/BottomTabbarRoute.dart';
 
-class routesTable{
 
-  static String get main_route => 'main_route';
+
+class RoutesTable{
+
+  static String get mainRoute => 'main_route';
+  static String get bottomTabbarRoute => 'bottom_tabbar_route';
+
 
   static Map<String, Widget Function(BuildContext)> tableMap(){
     
     return {
-        main_route : (context) => mainRoute(),
+        mainRoute : (context) => MainRoute(),
+        bottomTabbarRoute : (context) => BottomTabbarRoute(),
       };
   }
 
