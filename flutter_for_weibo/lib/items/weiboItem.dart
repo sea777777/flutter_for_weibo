@@ -14,6 +14,7 @@ class WeiboItem extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(16),
       color: Color(0x000000),
+      height: 200,
       child: Row(
         children: <Widget>[
           Expanded(

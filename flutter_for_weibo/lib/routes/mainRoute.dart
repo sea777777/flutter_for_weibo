@@ -131,92 +131,76 @@ class _MainRoute extends State<MainRoute> with SingleTickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
 
-    // return DefaultTabController(
-    //   length: tabs.length,
-    //   child: MaterialApp(
-    //     home: Scaffold(
-    //       backgroundColor: Colors.white,
-    //       appBar: AppBar(
-    //         title: TabBar(
-    //           controller: tabController,//可以和TabBarView使用同一个TabController
-    //           tabs: tabs,
-    //           isScrollable: true,
-    //           indicatorColor: Color(0xffff0000),
-    //           indicatorWeight: 1,
-    //           indicatorSize: TabBarIndicatorSize.tab,
-    //           indicatorPadding: EdgeInsets.only(bottom: 10.0),
-    //           labelPadding: EdgeInsets.only(left: 20),
-    //           labelColor: Color(0xff333333),
-    //           labelStyle: TextStyle(
-    //             fontSize: 15.0,
-    //           ),
-    //           unselectedLabelColor: Color(0xffffffff),
-    //           unselectedLabelStyle: TextStyle(
-    //             fontSize: 12.0,
-    //           ),
-    //         ),
-    //       ),
-    //       body: TabBarView(
-    //           controller: tabController,
-    //           children: tabs
-    //               .map((Tab tab) =>
-    //               Container(child: Center(child: Text(tab.text),),))
-    //               .toList()),
-    //     ),
-    //   ),
-    // );
+    return DefaultTabController(
+      length: tabs.length,
+      child: MaterialApp(
+        home: Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            title: TabBar(
+              controller: tabController,//可以和TabBarView使用同一个TabController
+              tabs: tabs,
+              isScrollable: true,
+              indicatorColor: Color(0xffff0000),
+              indicatorWeight: 1,
+              indicatorSize: TabBarIndicatorSize.tab,
+              indicatorPadding: EdgeInsets.only(bottom: 10.0),
+              labelPadding: EdgeInsets.only(left: 20),
+              labelColor: Color(0xff333333),
+              labelStyle: TextStyle(
+                fontSize: 15.0,
+              ),
+              unselectedLabelColor: Color(0xffffffff),
+              unselectedLabelStyle: TextStyle(
+                fontSize: 12.0,
+              ),
+            ),
+          ),
+          body: TabBarView(
+              controller: tabController,
+              children: tabs.map((Tab tab) =>
+                  Container(child: Center(child: 
+                    ListView.separated(
+                      controller: this.scrollController,
+                      itemCount: this.list.length + 1,
+                      separatorBuilder: (context, index) {
+                        return Divider(height: .5,color: Color(0xFFDDDDDD));
+                      },
+                      itemBuilder: (context, index) {
+                        if (index < this.list.length) {
+                          return WeiboItem(data: this.list[index]);
+                        } else {
+                          return this.renderBottom();
+                        }
+                      },
+                    ),
+                  ),
+                  )).toList()),
+        ),
+      ),
+    );
 
-     final pages = [MainRoute(), VideoRoute(), FindRoute(), MessageRoute(),MineRoute()];
 
     
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text('热门'),
-      ),
-      bottomNavigationBar: new Material(
-          color: Colors.white,
-          child: new TabBar(
-            controller: tabController,
-            labelColor: Colors.black87,
-            unselectedLabelColor: Colors.black26,
-            tabs: <Widget>[
-              new Tab(
-                text: "微博",
-                icon: Image.asset("lib/images/tabbar_home.png", width: 35, height: 35),
-              ),
-              new Tab(
-                text: "视频",
-                icon: Image.asset("lib/images/composer_video_icon_album.png", width: 35, height: 35),
-              ),
-              new Tab(
-                text: "发现",
-                icon: Image.asset("lib/images/tabbar_discover.png", width: 35, height: 35),
-              ),
-              new Tab(
-                text: "消息",
-                icon: Image.asset("lib/images/tabbar_message_center.webp", width: 35, height: 35),
-              ),
-              new Tab(
-                text: "我",
-                icon: Image.asset("lib/images/tabbar_profile.webp", width: 35, height: 35),
-              ),
-            ],
-          ),
-      ),
-      body:ListView.separated(
-        controller: this.scrollController,
-        itemCount: this.list.length + 1,
-        separatorBuilder: (context, index) {
-          return Divider(height: .5,color: Color(0xFFDDDDDD));
-        },
-        itemBuilder: (context, index) {
-          if (index < this.list.length) {
-            return WeiboItem(data: this.list[index]);
-          } else {
-            return this.renderBottom();
-          }
-        },
-    ));
+    // return Scaffold(
+    //   backgroundColor: Colors.white,
+    //   appBar: AppBar(
+    //     title: Text('微博'),
+    //   ),
+    
+    //   body:ListView.separated(
+    //     controller: this.scrollController,
+    //     itemCount: this.list.length + 1,
+    //     separatorBuilder: (context, index) {
+    //       return Divider(height: .5,color: Color(0xFFDDDDDD));
+    //     },
+    //     itemBuilder: (context, index) {
+    //       if (index < this.list.length) {
+    //         return WeiboItem(data: this.list[index]);
+    //       } else {
+    //         return this.renderBottom();
+    //       }
+    //     },
+    // ));
   }
 }

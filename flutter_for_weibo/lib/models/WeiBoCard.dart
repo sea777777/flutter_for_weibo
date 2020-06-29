@@ -2,7 +2,7 @@
 
 class WeiBoCard{
   String itemid ;
-  String scheme;//微博详情链接
+  String scheme;//微博详情链接: https://m.weibo.cn/status/4521192037474510?mblogid=4521192037474510&luicode=10000011&lfid=102803
   String createAt;//创建时间
   String text;//微博的文字部分（包含HTML标签）
   String source;//发布微博的源
@@ -24,8 +24,6 @@ class WeiBoCard{
     commentCount = mblog['comments_count'];
     attCount = mblog['attitudes_count'];
     rawText = mblog['raw_text'];
-    // print(itemid);
-    // print(rawText);
   }
 
   //解析 list
@@ -42,9 +40,6 @@ class WeiBoCard{
 
   @override
   bool operator == (other) {
-    int i = this.hashCode;
-    int j = other.hashCode;
-    bool b = this.hashCode == other.hashCode;
     return this.hashCode == other.hashCode;
   }
   
@@ -53,8 +48,33 @@ class WeiBoCard{
   int get hashCode {
     int index = this.itemid.lastIndexOf('_');
     String itemCode = this.itemid.substring(index+1);
-    int i = int.tryParse(itemCode) ?? -1;
-    return i;
+    return int.tryParse(itemCode) ?? -1;
   }
   
+}
+
+
+
+
+class User{
+  int id;
+  String screenName;//用户名
+  String profileImgUrl;//头像
+  String profileUrl;//当前用户的profile页
+  String verifiedReason;//微博认证：如：原创视频播主
+  String vipType;//vip类型 0：红v 皇冠
+
+
+  User.fromJson(Map<String,dynamic> json){
+    id = json['id'];
+    // screenName = json['scheme'];
+    // createAt = mblog['created_at'];
+    // text = mblog['text'];
+    // source = mblog['source'];
+    // user = mblog['user'];
+    // repostCount = mblog['reposts_count'];
+    // commentCount = mblog['comments_count'];
+    // attCount = mblog['attitudes_count'];
+    // rawText = mblog['raw_text'];
+  }
 }
