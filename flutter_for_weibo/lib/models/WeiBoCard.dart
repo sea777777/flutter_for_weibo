@@ -12,7 +12,7 @@ class WeiBoCard{
   int commentCount;//评论数
   int attCount;//赞👍数量
   String rawText;//源文本
-  String vipType;//vip类型 0：红v 皇冠
+  int vipType;//vip类型 0：红v 皇冠
 
   WeiBoCard.fromJson(Map<String,dynamic> json){
     itemid = json['itemid'];
@@ -27,6 +27,7 @@ class WeiBoCard{
     attCount = mblog['attitudes_count'];
     rawText = mblog['raw_text'];
     vipType = mblog['mblog_vip_type'];
+    pageInfo = PageInfo.fromJson(mblog['page_info']);
   }
 
   //解析 list
@@ -81,8 +82,19 @@ class PageInfo{
   String pageUrl;
   String type;//vide 、
   MediaInfo mediaInfo;//多媒体信息 视频 图片
+  String playCount;//32万次观看
+  String pageTitle;
+  String content1;
+  String content2;
 
   PageInfo.fromJson(Map<String,dynamic> json){
+    pageUrl = json['page_url'];
+    type = json['type'];
+    mediaInfo = MediaInfo.fromJson(json['media_info']);
+    playCount = json['play_count'];
+    pageTitle = json['page_title'];
+    content1 = json['content1'];
+    content2 = json['content2'];
 
   }
 
@@ -90,9 +102,16 @@ class PageInfo{
 
 
 class MediaInfo{
+  String name;
+  String url;//媒体URL : http://f.video.weibocdn.com/002pSqj5gx07Etu1zRcH01041200fLCb0E010.mp4?label=mp4_ld&template=640x360.25.0&trans_finger=bdef57f06ae52835a2c783ca389e8517&ori=0&ps=1CwnkDw1GXwCQx&Expires=1593526655&ssig=m3pF6VbtsS&KID=unistore,video
+  String onlineUsers;//：32万次观看
 
 
   MediaInfo.fromJson(Map<String,dynamic> json){
+    name = json['name'];
+    url = json['stream_url'];
+    onlineUsers = json['online_users'];
+    
 
   }
 }
