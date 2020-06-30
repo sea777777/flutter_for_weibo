@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_for_weibo/common/network/HttpService.dart';
-import 'package:flutter_for_weibo/items/weiboItem.dart';
+import 'package:flutter_for_weibo/items/WeiboItem.dart';
 import 'package:flutter_for_weibo/models/WeiBoCard.dart';
-import './VideoRoute.dart';
-import './FindRoute.dart';
-import './MessageRoute.dart';
-import './MineRoute.dart';
+import 'VideoRoute.dart';
+import 'FindRoute.dart';
+import 'MessageRoute.dart';
+import 'MineRoute.dart';
 
 
 class MainRoute extends StatefulWidget {

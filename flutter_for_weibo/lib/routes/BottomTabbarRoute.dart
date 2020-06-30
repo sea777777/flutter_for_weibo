@@ -3,7 +3,7 @@ import './VideoRoute.dart';
 import './FindRoute.dart';
 import './MessageRoute.dart';
 import './MineRoute.dart';
-import './mainRoute.dart';
+import 'MainRoute.dart';
 
 class BottomTabbarRoute extends StatefulWidget {
   const BottomTabbarRoute({Key key}) : super(key: key);
