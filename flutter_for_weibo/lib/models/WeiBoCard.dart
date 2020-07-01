@@ -13,21 +13,30 @@ class WeiBoCard{
   int attCount;//赞👍数量
   String rawText;//源文本
   int vipType;//vip类型 0：红v 皇冠
+  List pics;//Map类型：key（pid url size geo）如果没有，就找pageinfo 看type是啥
 
   WeiBoCard.fromJson(Map<String,dynamic> json){
+    print(json);
     itemid = json['itemid'];
     scheme = json['scheme'];
     Map mblog = json['mblog'];
     createAt = mblog['created_at'];
     text = mblog['text'];
     source = mblog['source'];
-    user = User.fromJson(mblog['user']);
+    Map userMap = mblog['user'];
+    if(userMap.isNotEmpty){
+      user = User.fromJson(mblog['user']);
+    }
     repostCount = mblog['reposts_count'];
     commentCount = mblog['comments_count'];
     attCount = mblog['attitudes_count'];
     rawText = mblog['raw_text'];
     vipType = mblog['mblog_vip_type'];
-    pageInfo = PageInfo.fromJson(mblog['page_info']);
+    Map pageInfoMap = mblog['page_info'];
+    if(pageInfoMap != null && pageInfoMap.isNotEmpty){
+      pageInfo = PageInfo.fromJson(mblog['page_info']);
+    }
+    pics = mblog['pics'];
   }
 
   //解析 list
@@ -36,8 +45,10 @@ class WeiBoCard{
     List dataCards =  data['cards'];
     List<WeiBoCard> cards = new List();
     for (var cardjson in dataCards) {
-      WeiBoCard card = WeiBoCard.fromJson(cardjson);
-      cards.add(card);
+      if(cardjson is Map){
+       WeiBoCard card = WeiBoCard.fromJson(cardjson);
+       cards.add(card);
+      }
     }
     return cards;
   }
@@ -80,22 +91,24 @@ class User{
 
 class PageInfo{
   String pageUrl;
-  String type;//vide 、
+  String type;//vide 、webpage、
   MediaInfo mediaInfo;//多媒体信息 视频 图片
   String playCount;//32万次观看
-  String pageTitle;
-  String content1;
-  String content2;
+  String pageTitle;//微博视频
+  String content1;//微博视频
+  String content2;//你们能坚持一件事多久？#非遗在身边# #遇见艺术# #国学新青年#  #王者荣耀@微博故事  @微博国学  
 
   PageInfo.fromJson(Map<String,dynamic> json){
-    pageUrl = json['page_url'];
-    type = json['type'];
-    mediaInfo = MediaInfo.fromJson(json['media_info']);
-    playCount = json['play_count'];
-    pageTitle = json['page_title'];
-    content1 = json['content1'];
-    content2 = json['content2'];
-
+      pageUrl = json['page_url'];
+      type = json['type'];
+      Map mediaMap = json['media_info'];
+      if(mediaMap != null && mediaMap.isNotEmpty){
+        mediaInfo = MediaInfo.fromJson(json['media_info']);
+      }
+      playCount = json['play_count'];
+      pageTitle = json['page_title'];
+      content1 = json['content1'];
+      content2 = json['content2'];
   }
 
 }
