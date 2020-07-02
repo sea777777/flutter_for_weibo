@@ -1,6 +1,7 @@
 # flutter_for_weibo
 
-A new Flutter project.
+基于Flutter编写的微博app，支持微博真实账号登录，查看热门微博、科技、游戏、股市等众多板块
+
 
 ## Getting Started
 
