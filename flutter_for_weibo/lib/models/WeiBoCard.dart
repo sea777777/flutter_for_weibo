@@ -13,10 +13,9 @@ class WeiBoCard{
   int attCount;//赞👍数量
   String rawText;//源文本
   int vipType;//vip类型 0：红v 皇冠
-  List pics;//Map类型：key（pid url size geo）如果没有，就找pageinfo 看type是啥
+  List<Map<String,String>> pics = new List<Map<String,String>>();//Map类型：key（pid url size geo）如果没有，就找pageinfo 看type是啥
 
   WeiBoCard.fromJson(Map<String,dynamic> json){
-    print(json);
     itemid = json['itemid'];
     scheme = json['scheme'];
     Map mblog = json['mblog'];
@@ -36,7 +35,18 @@ class WeiBoCard{
     if(pageInfoMap != null && pageInfoMap.isNotEmpty){
       pageInfo = PageInfo.fromJson(mblog['page_info']);
     }
-    pics = mblog['pics'];
+    List tempPics = mblog['pics'];
+    if (tempPics != null){
+      for (Map item in tempPics) {
+        Map<String,String> pic = new Map();
+        String url = item['url'];
+        String pid = item['pid'];
+        pic['url'] = url;
+        pic['pid'] = pid;
+        pics.add(pic);
+      }
+    }
+    
   }
 
   //解析 list

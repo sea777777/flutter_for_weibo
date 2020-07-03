@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_for_weibo/models/WeiBoCard.dart';
+import 'package:flutter_for_weibo/views/WBMediaWidget.dart';
 
 class WeiboItem extends StatelessWidget {
   final WeiBoCard data;
 
   const WeiboItem({Key key, this.data}) : super(key: key);
+  
+  String weiboSource(){
+    if (data.source != null && data.source.isNotEmpty){
+      return '来自${data.source}';
+    }else{
+      return data.createAt;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,30 +35,31 @@ class WeiboItem extends StatelessWidget {
                   ),
                 ),
                 Column(
+                  crossAxisAlignment:CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      padding: EdgeInsets.only(left: 10),
+                      padding: EdgeInsets.fromLTRB(10, 0, 0, 2),
                       child: Text(
                         '${data.user.screenName}',
-                        maxLines: 20,
+                        maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.normal,
-                          color: Color(0xFF333333),
+                          color: Color(0xFF414141),
                         ),
                       ),
                     ),
                     Container(
                       padding: EdgeInsets.only(left: 10),
                       child: Text(
-                        '${data.user.screenName}',
-                        maxLines: 20,
+                        '${this.weiboSource()}',
+                        maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          fontSize: 13,
+                          fontSize: 11,
                           fontWeight: FontWeight.normal,
-                          color: Color(0xFF333333),
+                          color: Color(0xFF969696),
                         ),
                       ),
                     ),
@@ -57,19 +67,13 @@ class WeiboItem extends StatelessWidget {
                 ),
               ],
             ),
-            Padding(padding: EdgeInsets.only(top: 30)),
+            Padding(padding: EdgeInsets.only(top: 10)),
+
+            //微博正文
             Row(
               children: <Widget>[
                 Expanded(
-                  child: Text(
-                    '${data.rawText}',
-                    maxLines: 20,
-                    overflow: TextOverflow.clip,
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: Color(0xFF333333),
-                    ),
-                  ),
+                  child: WBMediaWidget(data: this.data),
                 ),
               ],
             ),
