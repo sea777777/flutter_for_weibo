@@ -7,8 +7,6 @@ class WBMediaWidget extends StatelessWidget {
   const WBMediaWidget({Key key, this.data}) : super(key: key);
   final WeiBoCard data;
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -42,8 +40,14 @@ class WBPicturesWidget extends StatelessWidget {
       return GestureDetector(
         child: SizedBox.expand(
           child: Hero(
-            tag: img,
-            child: Text(''),
+            tag: img['pid'],
+            child: Container(
+              decoration: BoxDecoration(
+                color: Color(0xFF000000),
+                image: DecorationImage(
+                    fit: BoxFit.contain, image: NetworkImage('${img['url']}')),
+              ),
+            ),
           ),
         ),
         onTap: () {
@@ -53,14 +57,13 @@ class WBPicturesWidget extends StatelessWidget {
     }));
   }
 
-
   @override
   Widget build(BuildContext context) {
     int _crossAxisCount = 3;
     if (this.list == null || this.list.length == 0) {
       return Container();
     }
-    if(this.list.length == 4){
+    if (this.list.length == 4) {
       _crossAxisCount = 2;
     }
 
@@ -72,7 +75,7 @@ class WBPicturesWidget extends StatelessWidget {
       physics: new NeverScrollableScrollPhysics(),
       padding: const EdgeInsets.all(4.0),
       children: this.list.map(
-        (Map<String,String> img) {
+        (Map<String, String> img) {
           return GestureDetector(
             onTap: () {
               showPhoto(context, img);
@@ -80,12 +83,11 @@ class WBPicturesWidget extends StatelessWidget {
             child: Hero(
               tag: img['pid'],
               child: Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage('${img['url']}')),
-                  ),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover, image: NetworkImage('${img['url']}')),
                 ),
+              ),
             ),
           );
         },

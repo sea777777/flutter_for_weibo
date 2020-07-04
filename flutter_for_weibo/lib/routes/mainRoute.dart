@@ -28,19 +28,16 @@ class _MainRoute extends State<MainRoute> with SingleTickerProviderStateMixin{
   @override
   void initState() {
     super.initState();
-
+  
     tabs = <Tab>[
-      Tab(text: "Tab1",),
-      Tab(text: "Tab2",),
-      Tab(text: "Tab3",),
-      Tab(text: "Tab4",),
-      Tab(
-        text: "Tab5",
-        icon: Icon(Icons.phone),
-      ),
+      Tab(text: "热门"),
+      Tab(text: "同城",),
+      Tab(text: "榜单",),
+      Tab(text: "数码",),
+      Tab(text: "科技"),
+      Tab(text: "游戏"),
     ];
-    tabController =
-        TabController(initialIndex: 3, length: tabs.length, vsync: this);
+    tabController = TabController(initialIndex: 0, length: tabs.length, vsync: this);
 
 
     lastTime = DateTime.now();
@@ -134,6 +131,7 @@ class _MainRoute extends State<MainRoute> with SingleTickerProviderStateMixin{
     return DefaultTabController(
       length: tabs.length,
       child: MaterialApp(
+        theme: ThemeData(primaryColor: Color(0xFFFFFFFF)),
         home: Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
@@ -141,18 +139,18 @@ class _MainRoute extends State<MainRoute> with SingleTickerProviderStateMixin{
               controller: tabController,//可以和TabBarView使用同一个TabController
               tabs: tabs,
               isScrollable: true,
-              indicatorColor: Color(0xffff0000),
+              indicatorColor: Color(0xFFFFFFFF),
               indicatorWeight: 1,
               indicatorSize: TabBarIndicatorSize.tab,
               indicatorPadding: EdgeInsets.only(bottom: 10.0),
               labelPadding: EdgeInsets.only(left: 20),
-              labelColor: Color(0xff333333),
+              labelColor: Color(0xffE18519),
               labelStyle: TextStyle(
-                fontSize: 15.0,
+                fontSize: 16.0,
               ),
-              unselectedLabelColor: Color(0xffffffff),
+              unselectedLabelColor: Color(0xff3D3D3D),
               unselectedLabelStyle: TextStyle(
-                fontSize: 12.0,
+                fontSize: 16.0,
               ),
             ),
           ),
@@ -180,27 +178,5 @@ class _MainRoute extends State<MainRoute> with SingleTickerProviderStateMixin{
       ),
     );
 
-
-    
-    // return Scaffold(
-    //   backgroundColor: Colors.white,
-    //   appBar: AppBar(
-    //     title: Text('微博'),
-    //   ),
-    
-    //   body:ListView.separated(
-    //     controller: this.scrollController,
-    //     itemCount: this.list.length + 1,
-    //     separatorBuilder: (context, index) {
-    //       return Divider(height: .5,color: Color(0xFFDDDDDD));
-    //     },
-    //     itemBuilder: (context, index) {
-    //       if (index < this.list.length) {
-    //         return WeiboItem(data: this.list[index]);
-    //       } else {
-    //         return this.renderBottom();
-    //       }
-    //     },
-    // ));
   }
 }
