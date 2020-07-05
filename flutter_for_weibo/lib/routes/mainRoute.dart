@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_for_weibo/common/network/HttpService.dart';
 import 'package:flutter_for_weibo/items/WeiboItem.dart';
 import 'package:flutter_for_weibo/models/WeiBoCard.dart';
-import 'VideoRoute.dart';
-import 'FindRoute.dart';
-import 'MessageRoute.dart';
-import 'MineRoute.dart';
 
 
 class MainRoute extends StatefulWidget {
@@ -18,27 +14,22 @@ class MainRoute extends StatefulWidget {
 class _MainRoute extends State<MainRoute> with SingleTickerProviderStateMixin{
   bool isLoading = false;
   ScrollController scrollController = ScrollController();
-  List<WeiBoCard> list = List<WeiBoCard>();
+  List<List<WeiBoCard>> list = List<List<WeiBoCard>>();
+  List<Map<String,String>> urlList = List<Map<String,String>>();
   int sinceId = 0;
   DateTime lastTime ;
+  int currentIndex = 0;
 
   TabController tabController;
-  var tabs = <Tab>[];
+  List<Tab> tabs = List<Tab>();
 
   @override
   void initState() {
     super.initState();
   
-    tabs = <Tab>[
-      Tab(text: "热门"),
-      Tab(text: "同城",),
-      Tab(text: "榜单",),
-      Tab(text: "数码",),
-      Tab(text: "科技"),
-      Tab(text: "游戏"),
-    ];
-    tabController = TabController(initialIndex: 0, length: tabs.length, vsync: this);
+    initTabsData();
 
+    tabController = TabController(initialIndex: 0, length: tabs.length, vsync: this);
 
     lastTime = DateTime.now();
 
@@ -64,22 +55,50 @@ class _MainRoute extends State<MainRoute> with SingleTickerProviderStateMixin{
     this.scrollController.dispose();
   }
 
+  initTabsData(){
+    List<Map<String,String>> dataSource = [
+      {"text":"热门","path":"/api/container/getIndex",'containerid':'102803'},
+      {"text":"同城","path":URLConfig.getOtherChannelWB,'containerid':'102803_2222'},
+      {"text":"榜单","path":URLConfig.getOtherChannelWB,'containerid':'102803_ctg1_8999_-_ctg1_8999_home'},
+      {"text":"数码","path":URLConfig.getOtherChannelWB,'containerid':'102803_ctg1_5088_-_ctg1_5088'},
+      {"text":"科技","path":URLConfig.getOtherChannelWB,'containerid':'102803_ctg1_2088_-_ctg1_2088'},
+      {"text":"游戏","path":URLConfig.getOtherChannelWB,'containerid':'102803_ctg1_4888_-_ctg1_4888'}
+    ];
+    
+    for (Map item in dataSource) {
+      tabs.add(Tab(text: item['text']));
+      list.add(List<WeiBoCard>());
+      urlList.add({'path':item['path'],'containerid':item['containerid'],'currentPage':'1'});
+    }
+  }
+
+
   loadData() {
+    List dataList = list[currentIndex];
+    Map currentURLMap = urlList[currentIndex];
+    String containerid = currentURLMap['containerid'];
+    String path = (currentIndex == 0 ? null : currentURLMap['path']);
+    String page = (currentIndex == 0 ? null : currentURLMap['currentPage']);
+    String sinceId = (currentIndex != 0 ? null : currentURLMap['currentPage']);
 
     HttpService.getWeiBoContent(
-      containerId: '102803',
-      sinceId: sinceId.toString(),
+      page: page,
+      sinceId: sinceId,
+      path: path,
+      containerId: containerid,
       callback: (List<WeiBoCard> cardList){
         if(cardList != null && cardList.length > 0){
           for (var weibocard in cardList) {
-            if(!list.contains(weibocard)){
-              list.add(weibocard);
+            if(!dataList.contains(weibocard)){
+              dataList.add(weibocard);
             }
           }
         }
         
         this.setState(() {
-          this.sinceId ++;
+          String currentPage = currentURLMap['currentPage'];
+          int page = int.parse(currentPage) + 1;
+          currentURLMap['currentPage'] = page.toString();
           this.isLoading = false;
         });
       }
@@ -152,6 +171,10 @@ class _MainRoute extends State<MainRoute> with SingleTickerProviderStateMixin{
               unselectedLabelStyle: TextStyle(
                 fontSize: 16.0,
               ),
+              onTap: (int index){
+                currentIndex = index;
+                loadData();
+              },
             ),
           ),
           body: TabBarView(
@@ -160,13 +183,14 @@ class _MainRoute extends State<MainRoute> with SingleTickerProviderStateMixin{
                   Container(child: Center(child: 
                     ListView.separated(
                       controller: this.scrollController,
-                      itemCount: this.list.length + 1,
+                      itemCount: (this.list.length > currentIndex ? this.list[currentIndex].length : 0),
                       separatorBuilder: (context, index) {
                         return Divider(height: .5,color: Color(0xFFDDDDDD));
                       },
                       itemBuilder: (context, index) {
-                        if (index < this.list.length) {
-                          return WeiboItem(data: this.list[index]);
+                        List dataList = this.list[currentIndex];
+                        if (index < dataList.length) {
+                          return WeiboItem(data: dataList[index]);
                         } else {
                           return this.renderBottom();
                         }

@@ -4,11 +4,17 @@ import 'Network.dart';
 class HttpService {
   
   /*获取微博内容列表
-  * containerId : 102803 是喜欢 ，sinceId ：是页数
+  * containerId : 102803 是热门 ，sinceId/page ：是页数
+  * path:默认是：/api/container/getIndex
   */
-  static void getWeiBoContent({String containerId,String sinceId,void callback(List<WeiBoCard> result)}){
-    var params = {'containerid':containerId, 'openApp':'0','since_id':sinceId};
-    print('since_id' + sinceId);
+  static void getWeiBoContent({String path,String containerId,String sinceId,String page,void callback(List<WeiBoCard> result)}){
+    var params = {
+      'containerid':containerId, 
+      'openApp':'0',
+      'since_id':(sinceId != null ? sinceId : ''),
+      'page':(page != null ? page : '')
+    };
+
     //成功回调函数
     SuccessFunc successFunc = (dynamic result){
 
@@ -21,7 +27,13 @@ class HttpService {
       //弹窗error
       callback(null);
     };
-    Network.sharedInstance.doGet(URLConfig.getHotWB, params,successFunc,failFunc,URLConfig.mBaseURL);
+    Network.sharedInstance.doGet(
+      path: (path == null ? URLConfig.getHotWB : path ),
+      params: params,
+      success: successFunc,
+      failure: failFunc,
+      baseURL: URLConfig.mBaseURL
+    );
   }
 
 
@@ -40,19 +52,11 @@ class URLConfig {
   /* 热门微博 : containerid=102803 openApp=0 since_id */
   static const String getHotWB = '/api/container/getIndex';
 
-  /* 同城微博 ：containerid=102803_2222 page */
-  static const String getSameCityWB = 'api/feed/trendtop';
-
-  /* 榜单微博 ：containerid=102803_ctg1_8999_-_ctg1_8999_home page */
-  static const String getTrendTopWB = '/api/feed/trendtop';
-
-  /* 数码微博 ：containerid=102803_ctg1_5088_-_ctg1_5088 page */
-  static const String getDigitalWB = '/api/feed/trendtop';
-
-  /* 科技微博 ：containerid=102803_ctg1_2088_-_ctg1_2088 page=*/
-  static const String getITWB = '/api/feed/trendtop';
-
-  // containerid=102803_ctg1_4888_-_ctg1_4888 page=3
-  // 游戏
+  /* 同城微博 ：containerid=102803_2222 page=1 */
+  /* 榜单微博 ：containerid=102803_ctg1_8999_-_ctg1_8999_home page=1 */
+  /* 数码微博 ：containerid=102803_ctg1_5088_-_ctg1_5088 page=1 */
+  /* 科技微博 ：containerid=102803_ctg1_2088_-_ctg1_2088 page=1 */
+  /* 游戏微博 ：containerid=102803_ctg1_4888_-_ctg1_4888 page=1 */
+  static const String getOtherChannelWB = '/api/feed/trendtop';
 
 }

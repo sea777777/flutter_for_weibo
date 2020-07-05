@@ -38,11 +38,11 @@ class Network {
   }
 
 
-  void doGet(String path, Map<String, dynamic> params, [SuccessFunc success, FailFunc failure,String baseURL]) {
+  void doGet({String path, Map<String, dynamic> params, SuccessFunc success, FailFunc failure,String baseURL}) {
     _doRequest(path, params, HTTPMethod.get, success,failure,baseURL);
   }
 
-  void doPost(String path, Map<String, dynamic> params,[SuccessFunc success, FailFunc failure,String baseURL]) {
+  void doPost({String path, Map<String, dynamic> params,SuccessFunc success, FailFunc failure,String baseURL}) {
     _doRequest(path, params, HTTPMethod.post, success,failure,baseURL);
   }
 

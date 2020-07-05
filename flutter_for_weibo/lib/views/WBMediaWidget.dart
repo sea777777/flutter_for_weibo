@@ -13,7 +13,7 @@ class WBMediaWidget extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Text(
-            '${this.data.rawText}',
+            '${this.data.rawText == null ? this.data.text :this.data.rawText}',
             style: TextStyle(
               fontSize: 16,
             ),

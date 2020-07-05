@@ -31,7 +31,7 @@ class WeiboItem extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     image: DecorationImage(
-                        image: NetworkImage('${data.user.profileImgUrl}')),
+                        image: NetworkImage('${(data != null && data.user != null && data.user.profileImgUrl != null) ? data.user.profileImgUrl : ""}')),
                   ),
                 ),
                 Column(
@@ -40,7 +40,7 @@ class WeiboItem extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.fromLTRB(10, 0, 0, 2),
                       child: Text(
-                        '${data.user.screenName}',
+                        '${(data != null && data.user != null && data.user.screenName != null) ? data.user.screenName : ""}',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(

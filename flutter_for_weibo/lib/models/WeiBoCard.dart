@@ -16,16 +16,17 @@ class WeiBoCard{
   List<Map<String,String>> pics = new List<Map<String,String>>();//Map类型：key（pid url size geo）如果没有，就找pageinfo 看type是啥
 
   WeiBoCard.fromJson(Map<String,dynamic> json){
-    itemid = json['itemid'];
+    itemid = json['itemid'] == null ? json['mid'] : json['itemid'];
     scheme = json['scheme'];
-    Map mblog = json['mblog'];
+    Map mblog = json['mblog'] == null ? json : json['mblog'];
     createAt = mblog['created_at'];
     text = mblog['text'];
     source = mblog['source'];
     Map userMap = mblog['user'];
-    if(userMap.isNotEmpty){
+    if(userMap != null && userMap.isNotEmpty){
       user = User.fromJson(mblog['user']);
     }
+    
     repostCount = mblog['reposts_count'];
     commentCount = mblog['comments_count'];
     attCount = mblog['attitudes_count'];
@@ -52,14 +53,17 @@ class WeiBoCard{
   //解析 list
   static List<WeiBoCard> fromListJson(Map<String,dynamic> json){
     Map<String, dynamic> data = json['data'];
-    List dataCards =  data['cards'];
+    List dataCards =  data['cards'] == null ? data['statuses'] : data['cards'];
     List<WeiBoCard> cards = new List();
-    for (var cardjson in dataCards) {
-      if(cardjson is Map){
-       WeiBoCard card = WeiBoCard.fromJson(cardjson);
-       cards.add(card);
+    if(dataCards != null){
+      for (var cardjson in dataCards) {
+        if(cardjson is Map){
+          WeiBoCard card = WeiBoCard.fromJson(cardjson);
+          cards.add(card);
+        }
       }
     }
+    
     return cards;
   }
 
@@ -88,7 +92,6 @@ class User{
   String profileUrl;//当前用户的profile页
   String verifiedReason;//微博认证：如：原创视频播主,可为空
 
-
   User.fromJson(Map<String,dynamic> json){
     id = json['id'];
     screenName = json['screen_name'];
@@ -101,7 +104,7 @@ class User{
 
 class PageInfo{
   String pageUrl;
-  String type;//vide 、webpage、
+  String type;//vide 、webpage、search_topic(search的数据)、place（同城）
   MediaInfo mediaInfo;//多媒体信息 视频 图片
   String playCount;//32万次观看
   String pageTitle;//微博视频
