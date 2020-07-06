@@ -22,8 +22,7 @@ class _FindRoute extends State<FindRoute>{
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Text('发现');
   }
 
 

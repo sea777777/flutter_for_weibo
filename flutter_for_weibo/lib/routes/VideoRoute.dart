@@ -22,8 +22,7 @@ class _VideoRoute extends State<VideoRoute>{
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Text('视频');
   }
 
 

@@ -2,18 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_for_weibo/models/WeiBoCard.dart';
 import 'package:flutter_for_weibo/widgets/WBMediaWidget.dart';
 
-class WeiboItem extends StatelessWidget {
-  final WeiBoCard data;
+class MineHeaderItem extends StatelessWidget {
+  final User user;
 
-  const WeiboItem({Key key, this.data}) : super(key: key);
+  const MineHeaderItem({Key key, this.user}) : super(key: key);
   
-  String weiboSource(){
-    if (data.source != null && data.source.isNotEmpty){
-      return '来自${data.source}';
-    }else{
-      return data.createAt;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,39 +14,38 @@ class WeiboItem extends StatelessWidget {
       padding: EdgeInsets.all(15),
       child: Expanded(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Row(
               children: [
                 Container(
-                  width: 40,
-                  height: 40,
+                  width: 60,
+                  height: 60,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(30),
                     image: DecorationImage(
-                        image: NetworkImage('${(data != null && data.user != null && data.user.profileImgUrl != null) ? data.user.profileImgUrl : ""}')),
+                        image: NetworkImage('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594056112537&di=207fe43c0fc190714a80067ad4f66c18&imgtype=0&src=http%3A%2F%2Fa3.att.hudong.com%2F55%2F22%2F20300000929429130630222900050.jpg')),
                   ),
                 ),
                 Column(
                   crossAxisAlignment:CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      padding: EdgeInsets.fromLTRB(10, 0, 0, 2),
+                      padding: EdgeInsets.fromLTRB(15, 0, 0, 5),
                       child: Text(
-                        '${(data != null && data.user != null && data.user.screenName != null) ? data.user.screenName : ""}',
+                        'Sea77777',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.normal,
-                          color: Color(0xFF414141),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.only(left: 10),
+                      padding: EdgeInsets.only(left: 15),
                       child: Text(
-                        '${this.weiboSource()}',
+                        '简介：暂无介绍',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -68,15 +60,10 @@ class WeiboItem extends StatelessWidget {
               ],
             ),
             Padding(padding: EdgeInsets.only(top: 10)),
-
-            //微博正文
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: WBMediaWidget(data: this.data),
-                ),
-              ],
-            ),
+            Divider(height: .5,color: Color(0xFFDDDDDD)),
+            // Row(
+            //   children: 
+            // ),
           ],
         ),
       ),

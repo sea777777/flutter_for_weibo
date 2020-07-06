@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_for_weibo/routes/MainRoute.dart';
 import './common/Global.dart';
 import './common/network/HttpService.dart';
-import './views/Browser.dart';
+import './widgets/Browser.dart';
 import './common/network/Network.dart';
 import './common/RoutesTable.dart';
 

@@ -22,8 +22,7 @@ class _MessageRoute extends State<MessageRoute>{
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Text('消息');
   }
 
 
