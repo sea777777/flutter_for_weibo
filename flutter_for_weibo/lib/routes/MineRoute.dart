@@ -67,7 +67,13 @@ class _MineRoute extends State<MineRoute> {
       controller: this.scrollController,
       itemCount: 10,
       separatorBuilder: (context, index) {
-        return Divider(height: .5, color: Color(0xFFDDDDDD));
+        return Divider(
+                  height: .5,
+                  color: Color(0x1C000000),
+                  thickness: 10,
+                  indent: 0,
+                  endIndent: 0
+               );
       },
       itemBuilder: (context, index) {
         // if (index < dataList.length) {
