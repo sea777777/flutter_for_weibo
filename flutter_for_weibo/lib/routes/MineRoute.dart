@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_for_weibo/items/CategoryItem.dart';
 import 'package:flutter_for_weibo/items/MineHeaderItem.dart';
+import 'package:flutter_for_weibo/items/VisitHistoryItem.dart';
+import 'package:flutter_for_weibo/models/WeiBoCard.dart';
 
 class MineRoute extends StatefulWidget {
   const MineRoute({Key key}) : super(key: key);
@@ -65,22 +68,24 @@ class _MineRoute extends State<MineRoute> {
   Widget build(BuildContext context) {
     return ListView.separated(
       controller: this.scrollController,
-      itemCount: 10,
+      itemCount: 7,
       separatorBuilder: (context, index) {
         return Divider(
                   height: .5,
-                  color: Color(0x1C000000),
+                  color: Color(0xFFEEEEEE),
                   thickness: 10,
                   indent: 0,
                   endIndent: 0
                );
       },
       itemBuilder: (context, index) {
-        // if (index < dataList.length) {
-        return MineHeaderItem(user: null);
-        // } else {
-        // return this.renderBottom();
-        // }
+        if (index == 0 ) {
+          return MineHeaderItem(user: null);
+        } else if(index == 1){
+          return CategoryItem();
+        } else if(index == 2){
+          return VisitHistoryItem();
+        }
       },
     );
   }

@@ -17,7 +17,7 @@ class MineHeaderItem extends StatelessWidget {
           children: <Widget>[
             Divider(
                 height: .5,
-                color: Color(0x1C000000),
+                color: Color(0xFFEEEEEE),
                 thickness: 10,
                 indent: 0,
                 endIndent: 0
