@@ -16,7 +16,7 @@ class MineFooterItem extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(15, 15, 2, 0),
+                  margin: EdgeInsets.fromLTRB(15, 5, 2, 0),
                   width: 32,
                   height: 32,
                   child: Image.asset('lib/images/card1.png'),
@@ -78,6 +78,14 @@ class MineFooterItem extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+            Padding(padding: EdgeInsets.only(top: 15)),
+            Divider(
+                height: .5,
+                color: Color(0xFFEEEEEE),
+                thickness: 10,
+                indent: 0,
+                endIndent: 0
             ),
           ],
         ),

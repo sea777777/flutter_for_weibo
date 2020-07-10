@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_for_weibo/items/CategoryItem.dart';
 import 'package:flutter_for_weibo/items/MineFooterItem.dart';
@@ -6,6 +8,7 @@ import 'package:flutter_for_weibo/items/PublicWelfareItem.dart';
 import 'package:flutter_for_weibo/items/SuperTopicItem.dart';
 import 'package:flutter_for_weibo/items/VisitHistoryItem.dart';
 import 'package:flutter_for_weibo/items/WBCheckItem.dart';
+import 'package:flutter/cupertino.dart';
 
 class MineRoute extends StatefulWidget {
   const MineRoute({Key key}) : super(key: key);
@@ -16,8 +19,7 @@ class MineRoute extends StatefulWidget {
 
 class _MineRoute extends State<MineRoute> {
   ScrollController scrollController = ScrollController();
-  bool isLoading ;
-
+  bool isLoading;
 
   @override
   void initState() {
@@ -69,35 +71,52 @@ class _MineRoute extends State<MineRoute> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      controller: this.scrollController,
-      itemCount: 7,
-      separatorBuilder: (context, index) {
-        return Divider(
-                  height: .5,
-                  color: Color(0xFFEEEEEE),
-                  thickness: 10,
-                  indent: 0,
-                  endIndent: 0
-               );
-      },
-      itemBuilder: (context, index) {
-        if (index == 0 ) {
-          return MineHeaderItem(user: null);
-        } else if(index == 1){
-          return CategoryItem();
-        } else if(index == 2){
-          return VisitHistoryItem();
-        } else if(index == 3){
-          return SuperTopicItem();
-        } else if(index == 4){
-          return PublicWelfareItem();
-        } else if(index == 5){
-          return WBCheckItem();
-        } else if(index == 6){
-          return MineFooterItem();
-        }
-      },
+    return Scaffold(
+      appBar: CupertinoNavigationBar(
+        automaticallyImplyLeading: true,
+        automaticallyImplyMiddle: true,
+        middle: Text('我'),
+        padding: EdgeInsetsDirectional.only(start: 5, end: 0, top: 0, bottom: 0),
+        backgroundColor: Color(0xFFF8F8F8),
+        trailing: new IconButton(
+          icon: Image.asset('lib/images/mine_setting.png'),
+          iconSize: 80,
+          onPressed: () {},
+        ),
+        leading: new IconButton(
+          icon: Image.asset('lib/images/mine_addfriend.png'),
+          onPressed: () {},
+        ),
+      ),
+      body: ListView.separated(
+        controller: this.scrollController,
+        itemCount: 7,
+        separatorBuilder: (context, index) {
+          return Divider(
+              height: .5,
+              color: Color(0xFFEEEEEE),
+              thickness: 10,
+              indent: 0,
+              endIndent: 0);
+        },
+        itemBuilder: (context, index) {
+          if (index == 0) {
+            return MineHeaderItem(user: null);
+          } else if (index == 1) {
+            return CategoryItem();
+          } else if (index == 2) {
+            return VisitHistoryItem();
+          } else if (index == 3) {
+            return SuperTopicItem();
+          } else if (index == 4) {
+            return PublicWelfareItem();
+          } else if (index == 5) {
+            return WBCheckItem();
+          } else if (index == 6) {
+            return MineFooterItem();
+          }
+        },
+      ),
     );
   }
 }
