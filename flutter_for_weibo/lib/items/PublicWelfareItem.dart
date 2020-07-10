@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_for_weibo/models/WeiBoCard.dart';
 import 'package:flutter_for_weibo/widgets/WBMediaWidget.dart';
 
-class VisitHistoryItem extends StatelessWidget {
+class PublicWelfareItem extends StatelessWidget {
 
-  const VisitHistoryItem({Key key}) : super(key: key);
+  const PublicWelfareItem({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +19,10 @@ class VisitHistoryItem extends StatelessWidget {
               children: <Widget>[
                 Container(
                   padding: EdgeInsets.fromLTRB(15, 0, 2, 0),
-                  child: Image.asset('lib/images/history.png',width: 30,height: 30),
+                  child: Image.asset('lib/images/hand.png',width: 30,height: 30),
                 ),
                 Text(
-                  '我的经常访问',
+                  '微公益',
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
@@ -40,12 +40,20 @@ class VisitHistoryItem extends StatelessWidget {
               children: <Widget>[
                 Column(
                   children: [
-                    Image.asset("lib/images/1.png", width: 80, height: 80),
+                    Image.asset("lib/images/zero.png", width: 70, height: 70),
                     Text(
-                      'iOS程序猿',
+                      '爱心积分',
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.normal,
+                        color: Color(0xFF535353),
+                      ),
+                    ),
+                    Text(
+                      '累计',
                       style: TextStyle(
                         fontSize: 11,
-                        fontWeight: FontWeight.normal,
+                        fontWeight: FontWeight.w200,
                         color: Color(0xFF535353),
                       ),
                     ),
@@ -53,12 +61,20 @@ class VisitHistoryItem extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    Image.asset("lib/images/2.png", width: 80, height: 80),
+                    Image.asset("lib/images/heart.png", width: 70, height: 70),
                     Text(
-                      '追剧大赏',
+                      '爱心捐赠',
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.normal,
+                        color: Color(0xFF535353),
+                      ),
+                    ),
+                    Text(
+                      '参与项目捐款',
                       style: TextStyle(
                         fontSize: 11,
-                        fontWeight: FontWeight.normal,
+                        fontWeight: FontWeight.w200,
                         color: Color(0xFF535353),
                       ),
                     ),
@@ -66,25 +82,20 @@ class VisitHistoryItem extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    Image.asset("lib/images/3.png", width: 80, height: 80),
+                    Image.asset("lib/images/star.png", width: 70, height: 70),
                     Text(
-                      '三分钟...',
+                      '星光公益',
                       style: TextStyle(
-                        fontSize: 11,
+                        fontSize: 13,
                         fontWeight: FontWeight.normal,
                         color: Color(0xFF535353),
                       ),
                     ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Image.asset("lib/images/4.png", width: 80, height: 80),
                     Text(
-                      'z说球鞋',
+                      '助力明星公益',
                       style: TextStyle(
                         fontSize: 11,
-                        fontWeight: FontWeight.normal,
+                        fontWeight: FontWeight.w200,
                         color: Color(0xFF535353),
                       ),
                     ),
@@ -93,8 +104,6 @@ class VisitHistoryItem extends StatelessWidget {
               ],
             ),
             Padding(padding: EdgeInsets.only(top: 25)),
-            
-
           ],
         ),
       ),

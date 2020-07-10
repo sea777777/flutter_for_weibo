@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_for_weibo/models/WeiBoCard.dart';
 import 'package:flutter_for_weibo/widgets/WBMediaWidget.dart';
 
-class VisitHistoryItem extends StatelessWidget {
+class SuperTopicItem extends StatelessWidget {
 
-  const VisitHistoryItem({Key key}) : super(key: key);
+  const SuperTopicItem({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +19,10 @@ class VisitHistoryItem extends StatelessWidget {
               children: <Widget>[
                 Container(
                   padding: EdgeInsets.fromLTRB(15, 0, 2, 0),
-                  child: Image.asset('lib/images/history.png',width: 30,height: 30),
+                  child: Image.asset('lib/images/supertopic.png',width: 30,height: 30),
                 ),
                 Text(
-                  '我的经常访问',
+                  '超话社区',
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
@@ -40,12 +40,20 @@ class VisitHistoryItem extends StatelessWidget {
               children: <Widget>[
                 Column(
                   children: [
-                    Image.asset("lib/images/1.png", width: 80, height: 80),
+                    Image.asset("lib/images/spring.png", width: 80, height: 80),
                     Text(
-                      'iOS程序猿',
+                      '春晚答题王',
                       style: TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.normal,
+                        color: Color(0xFF535353),
+                      ),
+                    ),
+                    Text(
+                      '已关注',
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w200,
                         color: Color(0xFF535353),
                       ),
                     ),
@@ -53,12 +61,20 @@ class VisitHistoryItem extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    Image.asset("lib/images/2.png", width: 80, height: 80),
+                    Image.asset("lib/images/give.png", width: 80, height: 80),
                     Text(
-                      '追剧大赏',
+                      '赠书福利',
                       style: TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.normal,
+                        color: Color(0xFF535353),
+                      ),
+                    ),
+                    Text(
+                      '已关注',
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w200,
                         color: Color(0xFF535353),
                       ),
                     ),
@@ -66,12 +82,20 @@ class VisitHistoryItem extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    Image.asset("lib/images/3.png", width: 80, height: 80),
+                    Image.asset("lib/images/supercar.png", width: 80, height: 80),
                     Text(
-                      '三分钟...',
+                      '豪车',
                       style: TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.normal,
+                        color: Color(0xFF535353),
+                      ),
+                    ),
+                    Text(
+                      '已关注',
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w200,
                         color: Color(0xFF535353),
                       ),
                     ),
@@ -79,12 +103,20 @@ class VisitHistoryItem extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    Image.asset("lib/images/4.png", width: 80, height: 80),
+                    Image.asset("lib/images/school.png", width: 80, height: 80),
                     Text(
-                      'z说球鞋',
+                      '校园',
                       style: TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.normal,
+                        color: Color(0xFF535353),
+                      ),
+                    ),
+                    Text(
+                      '已关注',
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w200,
                         color: Color(0xFF535353),
                       ),
                     ),
@@ -93,8 +125,6 @@ class VisitHistoryItem extends StatelessWidget {
               ],
             ),
             Padding(padding: EdgeInsets.only(top: 25)),
-            
-
           ],
         ),
       ),

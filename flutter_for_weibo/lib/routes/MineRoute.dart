@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_for_weibo/items/CategoryItem.dart';
+import 'package:flutter_for_weibo/items/MineFooterItem.dart';
 import 'package:flutter_for_weibo/items/MineHeaderItem.dart';
+import 'package:flutter_for_weibo/items/PublicWelfareItem.dart';
+import 'package:flutter_for_weibo/items/SuperTopicItem.dart';
 import 'package:flutter_for_weibo/items/VisitHistoryItem.dart';
-import 'package:flutter_for_weibo/models/WeiBoCard.dart';
+import 'package:flutter_for_weibo/items/WBCheckItem.dart';
 
 class MineRoute extends StatefulWidget {
   const MineRoute({Key key}) : super(key: key);
@@ -85,6 +88,14 @@ class _MineRoute extends State<MineRoute> {
           return CategoryItem();
         } else if(index == 2){
           return VisitHistoryItem();
+        } else if(index == 3){
+          return SuperTopicItem();
+        } else if(index == 4){
+          return PublicWelfareItem();
+        } else if(index == 5){
+          return WBCheckItem();
+        } else if(index == 6){
+          return MineFooterItem();
         }
       },
     );
