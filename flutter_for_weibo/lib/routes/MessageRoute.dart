@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_for_weibo/items/MessageItem.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_for_weibo/models/WeiBoCard.dart';
 import 'package:flutter_for_weibo/widgets/CustomNavBar.dart';
 
 class MessageRoute extends StatefulWidget {
@@ -25,42 +26,20 @@ class _MessageRoute extends State<MessageRoute> {
     super.dispose();
   }
 
-  Widget renderBottom() {
-    if (this.isLoading) {
-      return Container(
-        padding: EdgeInsets.symmetric(vertical: 15),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              '努力加载中...',
-              style: TextStyle(
-                fontSize: 15,
-                color: Color(0xFF333333),
-              ),
-            ),
-            Padding(padding: EdgeInsets.only(left: 10)),
-            SizedBox(
-              width: 20,
-              height: 20,
-              child: CircularProgressIndicator(strokeWidth: 3),
-            ),
-          ],
-        ),
-      );
-    } else {
-      return Container(
-        padding: EdgeInsets.symmetric(vertical: 15),
-        alignment: Alignment.center,
-        child: Text(
-          '上拉加载更多',
-          style: TextStyle(
-            fontSize: 15,
-            color: Color(0xFF333333),
-          ),
-        ),
-      );
-    }
+  List<User> userList() {
+    User at = new User(screenName: '@我的', profileImgUrl: 'lib/images/at.png');
+    User comment = new User(screenName: '评论',profileImgUrl: 'lib/images/comment.png');
+    User zan = new User(screenName: '赞', profileImgUrl: 'lib/images/zan1.png');
+    User rss = new User(screenName: '订阅消息', desc: '[39条] 微博钱包：[链接]恭喜您获得微博会员。',profileImgUrl: 'lib/images/rss.png');
+    User user = new User(screenName: '乡村教师代言人-马云', desc: '我这有个P10岗，来不来？',profileImgUrl: 'lib/images/mayun.png');
+    User user1 = new User(screenName: '普京', desc: '最近又搞了两艘航母，兄弟啥时候来看看？',profileImgUrl: 'lib/images/pujing.png');
+    User user2 = new User(screenName: '特朗普', desc: '老铁，最近我贼好心。',profileImgUrl: 'lib/images/telangpu.png');
+    User user3 = new User(screenName: '雷军', desc: '兄弟最近咋样？are you ok ?',profileImgUrl: 'lib/images/leijun.png');
+    User user4 = new User(screenName: '王力宏', desc: '晚上一起来KTV唱歌？',profileImgUrl: 'lib/images/wanglihong.png');
+    User user5 = new User(screenName: '蔡徐坤', desc: '下班去打篮球？',profileImgUrl: 'lib/images/caixukun.png');
+    User user6 = new User(screenName: '刘德华', desc: '老铁，你说我跟王力宏我俩谁帅？',profileImgUrl: 'lib/images/liudehua.png');
+    User user7 = new User(screenName: '比尔盖茨', desc: '哥，我最近手头紧，想问你借点钱。',profileImgUrl: 'lib/images/biergaici.png');
+    return [at,comment,zan,rss,user,user1,user2,user3,user4,user5,user6,user7];
   }
 
   @override
@@ -128,16 +107,13 @@ class _MessageRoute extends State<MessageRoute> {
       ),
       body: ListView.separated(
         controller: this.scrollController,
-        itemCount: 7,
+        itemCount: userList().length,
         separatorBuilder: (context, index) {
-          return Divider(
-              height: .5,
-              color: Color(0xFFEEEEEE),
-              indent: 0,
-              endIndent: 0);
+          return Divider(height: .5, color: Color(0xFFEEEEEE), indent: 0, endIndent: 0);
         },
         itemBuilder: (context, index) {
-          return MessageItem();
+          User user = userList()[index];
+          return MessageItem(user: user);
         },
       ),
     );

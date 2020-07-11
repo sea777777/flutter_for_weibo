@@ -91,6 +91,12 @@ class User{
   String profileImgUrl;//头像
   String profileUrl;//当前用户的profile页
   String verifiedReason;//微博认证：如：原创视频播主,可为空
+  String desc;
+
+  User({this.screenName,this.desc,this.profileImgUrl}){
+
+  }
+
 
   User.fromJson(Map<String,dynamic> json){
     id = json['id'];

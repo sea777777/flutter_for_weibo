@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_for_weibo/models/WeiBoCard.dart';
-import 'package:flutter_for_weibo/widgets/WBMediaWidget.dart';
+
+
 
 class MessageItem extends StatelessWidget {
   final User user;
@@ -24,8 +25,8 @@ class MessageItem extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
                     image: DecorationImage(
-                        image: NetworkImage(
-                            'http://pic1.58cdn.com.cn/zhuanzh/n_0959110f0f774a32b9823e1c12e2d511.jpg?w=750&h=0')),
+                        image: AssetImage(user.profileImgUrl)
+                    ),
                   ),
                 ),
                 Column(
@@ -34,7 +35,7 @@ class MessageItem extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.fromLTRB(0, 0, 0, 3),
                       child: Text(
-                        '爱仕达',
+                        user.screenName,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -45,8 +46,8 @@ class MessageItem extends StatelessWidget {
                     ),
                     Container(
                       padding: EdgeInsets.only(left: 0),
-                      child: Text(
-                        '简介：暂无介绍',
+                      child: user.desc == null ? Container() : Text(
+                        user.desc ,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
