@@ -1,33 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_for_weibo/routes/MainRoute.dart';
+import 'package:flutter_for_weibo/common/utils/CacheUtil.dart';
+import 'package:flutter_for_weibo/routes/BottomTabbarRoute.dart';
 import './common/Global.dart';
 import './common/network/HttpService.dart';
 import './widgets/Browser.dart';
-import './common/network/Network.dart';
 import './common/RoutesTable.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+
+  
   @override
   Widget build(BuildContext context) {
-    //初始化全局必要参数
-    Global.init();
+
 
     return MaterialApp(
-      title: '微博宇宙无敌版',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      routes: RoutesTable.tableMap(),//注册 route 表
-      home: MyHomePage(title: '微博宇宙无敌版'),
+      routes: RoutesTable.tableMap(), //这里，我们统一对所有route进行注册，所以需要跳转的页面，请在 RoutesTable 进行注册
+      home: MyHomePage(),
     );
   }
 }
-
-
-
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -39,46 +35,73 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  //初始化全局必要参数
+  Future prepareGlobal() async {
+    await Global.init();
+    await CacheUtil.init();
+  }
 
-  void login() {
+  @override
+  void initState() {
+    super.initState();
     
-    Navigator.of(context).pushNamed(RoutesTable.bottomTabbarRoute);
-    return;
-
-
-    Navigator.of(context).push(new MaterialPageRoute(builder: (_) {
-
-      String url = URLConfig.baseURL + URLConfig.auth + "?display=" + Global.weiboDisplay + "&client_id=" + Global.weiboAppKey + "&redirect_uri=" + URLConfig.weiboRedirectUri;
-
-      return new Browser(
-        url: url,
-        title: "登录",
-        filterURLCallback: (String url) {
-          int codeIndex = url.lastIndexOf("code");
-          if (codeIndex > 0) {
-            String code = url.substring(codeIndex + 5);
-
-          }
-        },
-      );
-      
-    }));
   }
 
   @override
   Widget build(BuildContext context) {
+
+
+     //如果上次登陆过，那么下次自动登录
+     CacheUtil.init().then((value) {
+       Global.init().then((value) {
+
+          DateTime curTime = DateTime.now();
+          int curSeconds = curTime.millisecondsSinceEpoch;
+          int expores = CacheUtil.sharedInstance.getExpires();
+          
+          int diff = expores - curSeconds;
+          String token = CacheUtil.sharedInstance.getAccessToken();
+          String uid = CacheUtil.sharedInstance.getUid();
+        
+          if(diff > 0 && token != null && uid != null){
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                return BottomTabbarRoute();
+              }));
+          }
+          
+       });
+    });
+
+
+    String url = URLConfig.baseURL +
+        URLConfig.auth +
+        "?display=" +
+        Global.weiboDisplay +
+        "&client_id=" +
+        Global.weiboAppKey +
+        "&redirect_uri=" +
+        URLConfig.weiboRedirectUri;
+
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-           RaisedButton(onPressed: login, child: Text("登录")),
-          ],
-        ),
-      ),
+      body: Browser(
+        url: url,
+        title: "登录",
+        filterURLCallback: (String filterUrl) {
+          int codeIndex = filterUrl.lastIndexOf("code");
+          if (codeIndex > 0) {
+            String code = filterUrl.substring(codeIndex + 5);
+
+            //准备必要参数
+            prepareGlobal().then((value) {
+              CacheUtil.sharedInstance.sotreAuthorizationCode(code);
+              Navigator.of(context).pushNamed(RoutesTable.bottomTabbarRoute);
+            });
+
+          }          
+      },
+    )
     );
+
   }
 }

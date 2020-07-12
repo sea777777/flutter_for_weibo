@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_for_weibo/common/network/HttpService.dart';
 import 'package:flutter_for_weibo/items/CategoryItem.dart';
 import 'package:flutter_for_weibo/items/MineFooterItem.dart';
 import 'package:flutter_for_weibo/items/MineHeaderItem.dart';
@@ -20,10 +21,20 @@ class MineRoute extends StatefulWidget {
 class _MineRoute extends State<MineRoute> {
   ScrollController scrollController = ScrollController();
   bool isLoading;
+  Map userInfo;
 
   @override
   void initState() {
     super.initState();
+
+    HttpService.getUserInfo(callback: (Map result){
+
+      if(result != null){
+        setState(() {
+          userInfo = result;
+        });
+      }
+    });
   }
 
   @override
@@ -101,7 +112,7 @@ class _MineRoute extends State<MineRoute> {
         },
         itemBuilder: (context, index) {
           if (index == 0) {
-            return MineHeaderItem(user: null);
+            return MineHeaderItem(userInfo: userInfo);
           } else if (index == 1) {
             return CategoryItem();
           } else if (index == 2) {

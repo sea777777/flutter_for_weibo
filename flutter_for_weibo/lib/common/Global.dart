@@ -28,4 +28,5 @@ class Global {
   static String weiboAppSecret = '9e80543f2e9546c76e06d3fd9d1ef9eb';
   static String weiboDisplay = 'mobile';
 
+
 }

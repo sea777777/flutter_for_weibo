@@ -15,14 +15,13 @@ class BottomTabbarRoute extends StatefulWidget {
 class _BottomTabbarRoute extends State<BottomTabbarRoute> {
   
   int currentIndex = 0;
-
   
   final pages = [
     MainRoute(),    //微博首页
     VideoRoute(),   //视频页面
     FindRoute(),    //发现页
     MessageRoute(), //消息页
-    MineRoute()     //我的页面
+    MineRoute()   //我的页面
   ];
   
   final List<BottomNavigationBarItem> bottomNavItems = [

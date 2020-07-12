@@ -1,3 +1,5 @@
+import 'package:flutter_for_weibo/common/Global.dart';
+import 'package:flutter_for_weibo/common/utils/CacheUtil.dart';
 import 'package:flutter_for_weibo/models/WeiBoCard.dart';
 import 'Network.dart';
 
@@ -34,10 +36,103 @@ class HttpService {
       failure: failFunc,
       baseURL: URLConfig.mBaseURL
     );
+  } 
+
+
+  static void getAccessToken({void callback(Map result)}) {
+
+    String code = CacheUtil.sharedInstance.getAuthorizationCode();
+    var params = {'client_id': Global.weiboAppKey,
+                  'client_secret' : Global.weiboAppSecret,
+                  'grant_type': 'authorization_code',
+                  'code' : (code != null ? code : ''),
+                  "redirect_uri": URLConfig.weiboRedirectUri,
+                  };
+  
+    //成功回调函数
+    SuccessFunc successFunc = (dynamic result){
+      String token = result['access_token'];
+      String uid = result['uid'];
+      int expires = result['expires_in'];//单位： 秒
+
+      DateTime curTime = DateTime.now();
+      DateTime newDateTime = curTime.add(new Duration(seconds: expires));
+      int lastexpires = newDateTime.millisecondsSinceEpoch;
+
+      //存储token，以后作为请求微博api的基础参数
+      CacheUtil.sharedInstance.sotreAccessToken(token);
+      CacheUtil.sharedInstance.sotreUid(uid);
+      CacheUtil.sharedInstance.sotreExpires(lastexpires);
+      callback(result);
+    };
+
+    //失败回调函数
+    FailFunc failFunc = (dynamic error){
+      callback(null);
+    };
+    Network.sharedInstance.doPost(
+      path: URLConfig.getAccessToken,
+      params: params,
+      success: successFunc,
+      failure: failFunc
+    );
   }
 
 
+  
+
+
+  //获取用户信息
+  static void getUserInfo({void callback(Map result)}) {
+
+      String token = CacheUtil.sharedInstance.getAccessToken();
+      String uid = CacheUtil.sharedInstance.getUid();
+
+      void requestUserInfo(){
+        var params = {'access_token': token == null ? '' : token,
+                        'uid' : uid == null ? '' : uid};
+
+        //成功回调函数
+        SuccessFunc successFunc = (dynamic result){
+          
+          callback(result);
+          
+        };
+        //失败回调函数
+        FailFunc failFunc = (dynamic error){
+          callback(null);
+        };
+        Network.sharedInstance.doGet(
+          path: URLConfig.getUserInfo,
+          params: params,
+          success: successFunc,
+          failure: failFunc
+        );
+      }
+      
+      DateTime curTime = DateTime.now();
+      int curSeconds = curTime.millisecondsSinceEpoch;
+      int expores = CacheUtil.sharedInstance.getExpires();
+      
+      int diff = expores - curSeconds;
+      
+      if(diff <= 0 || token == null || uid == null){
+        getAccessToken(callback: (Map map){
+          requestUserInfo();
+        });
+      }else{
+        requestUserInfo();
+      }
+
+    }
+
 }
+
+
+
+
+
+
 
 class URLConfig {
   static const String baseURL = 'https://api.weibo.com';
@@ -58,5 +153,12 @@ class URLConfig {
   /* 科技微博 ：containerid=102803_ctg1_2088_-_ctg1_2088 page=1 */
   /* 游戏微博 ：containerid=102803_ctg1_4888_-_ctg1_4888 page=1 */
   static const String getOtherChannelWB = '/api/feed/trendtop';
+
+  //获取用户信息
+  static const String getUserInfo = '/2/users/show.json';
+
+
+  static const String getAccessToken = '/oauth2/access_token';
+
 
 }

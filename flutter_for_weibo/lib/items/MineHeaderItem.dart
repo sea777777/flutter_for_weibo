@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_for_weibo/models/WeiBoCard.dart';
-import 'package:flutter_for_weibo/widgets/WBMediaWidget.dart';
 
 class MineHeaderItem extends StatelessWidget {
-  final User user;
-
-  const MineHeaderItem({Key key, this.user}) : super(key: key);
+  final Map userInfo;
+  const MineHeaderItem({Key key, this.userInfo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +26,13 @@ class MineHeaderItem extends StatelessWidget {
                   width: 60,
                   height: 60,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(100),
                     image: DecorationImage(
+                      fit: BoxFit.fill,
                         image: NetworkImage(
-                            'http://pic1.58cdn.com.cn/zhuanzh/n_0959110f0f774a32b9823e1c12e2d511.jpg?w=750&h=0')),
+                            (userInfo == null ? '' : userInfo['profile_image_url'].toString())
+                        )
+                      ),
                   ),
                 ),
                 Column(
@@ -41,7 +41,7 @@ class MineHeaderItem extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.fromLTRB(0, 0, 0, 6),
                       child: Text(
-                        'Sea77777',
+                        userInfo == null ? '暂无昵称' : userInfo['screen_name'].toString(),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -53,7 +53,7 @@ class MineHeaderItem extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.only(left: 0),
                       child: Text(
-                        '简介：暂无介绍',
+                        userInfo == null ? '简介：暂无' : userInfo['description'].toString(),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -78,7 +78,7 @@ class MineHeaderItem extends StatelessWidget {
                 Column(
                   children: [
                     Text(
-                      '262',
+                      userInfo != null ? userInfo['statuses_count'].toString() : '0',
                       style: TextStyle(
                         fontSize:15,
                         fontWeight: FontWeight.w700,
@@ -97,7 +97,7 @@ class MineHeaderItem extends StatelessWidget {
                 Column(
                   children: [
                     Text(
-                      '379',
+                      userInfo != null ? userInfo['friends_count'].toString() : '0',
                       style: TextStyle(
                         fontSize:15,
                         fontWeight: FontWeight.w700,
@@ -116,7 +116,7 @@ class MineHeaderItem extends StatelessWidget {
                 Column(
                   children: [
                     Text(
-                      '66',
+                      userInfo != null ? userInfo['followers_count'].toString() : '0',
                       style: TextStyle(
                         fontSize:15,
                         fontWeight: FontWeight.w700,

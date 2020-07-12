@@ -33,7 +33,7 @@ class _MessageRoute extends State<MessageRoute> {
     User rss = new User(screenName: '订阅消息', desc: '[39条] 微博钱包：[链接]恭喜您获得微博会员。',profileImgUrl: 'lib/images/rss.png');
     User user = new User(screenName: '乡村教师代言人-马云', desc: '我这有个P10岗，来不来？',profileImgUrl: 'lib/images/mayun.png');
     User user1 = new User(screenName: '普京', desc: '最近又搞了两艘航母，兄弟啥时候来看看？',profileImgUrl: 'lib/images/pujing.png');
-    User user2 = new User(screenName: '特朗普', desc: '老铁，最近我贼好心。',profileImgUrl: 'lib/images/telangpu.png');
+    User user2 = new User(screenName: '特朗普', desc: '老铁，最近我贼闹心。',profileImgUrl: 'lib/images/telangpu.png');
     User user3 = new User(screenName: '雷军', desc: '兄弟最近咋样？are you ok ?',profileImgUrl: 'lib/images/leijun.png');
     User user4 = new User(screenName: '王力宏', desc: '晚上一起来KTV唱歌？',profileImgUrl: 'lib/images/wanglihong.png');
     User user5 = new User(screenName: '蔡徐坤', desc: '下班去打篮球？',profileImgUrl: 'lib/images/caixukun.png');
