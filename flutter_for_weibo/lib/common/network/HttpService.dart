@@ -61,8 +61,8 @@ class HttpService {
 
       //存储token，以后作为请求微博api的基础参数
       CacheUtil.sharedInstance.sotreAccessToken(token);
-      CacheUtil.sharedInstance.sotreUid(uid);
-      CacheUtil.sharedInstance.sotreExpires(lastexpires);
+      CacheUtil.sharedInstance.storeUid(uid);
+      CacheUtil.sharedInstance.storeExpires(lastexpires);
       callback(result);
     };
 

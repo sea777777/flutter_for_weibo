@@ -49,7 +49,7 @@ class CacheUtil {
     return token == null ? '' : token;
   }
 
-  void sotreUid (String uid){
+  void storeUid (String uid){
     if(uid != null && uid.length > 0){
       _sharePref.setString('uid', uid);
     }
@@ -61,7 +61,7 @@ class CacheUtil {
   }
 
 
-  void sotreExpires (int expires){
+  void storeExpires (int expires){
       _sharePref.setInt('expires', expires);
   }
 

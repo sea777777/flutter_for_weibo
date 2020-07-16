@@ -1,0 +1,64 @@
+{
+    "fileheader.configObj": {
+
+        "createFileTime": true,
+        "language": {
+            "languagetest": {
+                "head": "/$$",
+                "middle": " $ @",
+                "end": " $/"
+            }
+        },
+        "autoAdd": true,
+        "autoAddLine": 100,
+        "autoAlready": true,
+        "annotationStr": {
+            "head": "/*",
+            "middle": " * @",
+            "end": " */",
+            "use": false
+        },
+        "headInsertLine": {
+            "php": 2
+        },
+        "beforeAnnotation": {
+            "文件后缀": "该文件后缀的头部注释之前添加某些内容"
+        },
+        "afterAnnotation": {
+            "文件后缀": "该文件后缀的头部注释之后添加某些内容"
+        },
+        "specialOptions": {
+            "特殊字段": "自定义比如LastEditTime/LastEditors"
+        },
+        "switch": {
+            "newlineAddAnnotation": true
+        },
+        "prohibitAutoAdd": [
+            "json"
+        ],
+        "prohibitItemAutoAdd": [
+            "项目的全称, 整个项目禁止自动添加头部注释, 可以使用快捷键添加"
+        ],
+        "moveCursor": true,
+        "dateFormat": "YYYY-MM-DD HH:mm:ss",
+        "atSymbol": "@",
+        "atSymbolObj": {
+            "文件后缀": "修改它的@符号"
+        },
+        "colon": ": ",
+        "colonObj": {
+            "文件后缀": "修改它的冒号"
+        },
+        "filePathColon": "路径分隔符替换",
+        "showErrorMessage": false,
+        "wideSame": false,
+        "wideNum": 13,
+        "CheckFileChange": false,
+        "createHeader": true,
+        "useWorker": false,
+        "designAddHead": false
+    },
+    "fileheader.cursorMode": {
+    
+    }
+}

@@ -32,6 +32,8 @@ dependencies:
 
   #webview ,这里在微博授权登录时候要跳到webview来授权
   webview_flutter: ^0.3.22
+  # 路由管理 
+  fluro: "^1.6.3"
 
 
 dev_dependencies:

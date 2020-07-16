@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import './VideoRoute.dart';
-import './FindRoute.dart';
-import './MessageRoute.dart';
-import './MineRoute.dart';
+import '../video/VideoRoute.dart';
+import '../find/FindRoute.dart';
+import '../message/MessageRoute.dart';
+import '../mine/MineRoute.dart';
 import 'MainRoute.dart';
 
 class BottomTabbarRoute extends StatefulWidget {
